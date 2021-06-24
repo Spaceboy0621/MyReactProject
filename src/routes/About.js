@@ -1,12 +1,18 @@
 import React from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function About() {
   const [showModal, setShowModal] = React.useState(false);
+  const setToast = () => {
+    toast.success("I always felt like I could do anything.");
+  }
   return (
     <div>
-      <h1 className="text-blue-500 text-center py-6 text-6xl">This website is my project</h1>
-      <h1 className="text-blue-500 text-center py-6 text-4xl">Made by Nikolay</h1>
-      <h1 className="text-blue-500 text-center py-6 text-3xl">Copyright 2021</h1>
+      <div className="text-blue-500 text-center py-1 text-6xl">This website is my project</div>
+      <div className="text-blue-500 text-center py-3 text-4xl">Made by Nikolay</div>
+      <div className="text-center text-green-300 py-3 text-3xl">Stack : React, Redux, React-Router, React-Hooks, Tailwindcss, Firebase</div>
+
       <div className="text-center">
         <button
           className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -16,7 +22,17 @@ export default function About() {
           Open regular modal
         </button>
       </div>
-      
+
+      <div className="text-center mt-3">
+        <button
+          className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          type="button"
+          onClick={() => setToast()}
+        >
+          Toast
+        </button>
+      </div>
+      <ToastContainer />
       {showModal ? (
         <>
           <div

@@ -9,6 +9,7 @@ import Login from "./routes/Login";
 import Todo from "./routes/Todo";
 import Todoadd from "./routes/Todoadd";
 import Todoedit from "./routes/Todoedit";
+import Register from "./routes/Register";
 import Feedback from "./routes/Feedback";
 import PersonalityTest from "./routes/PersonalityTest";
 import Footer from "./components/Footer";
@@ -43,6 +44,9 @@ export default function App() {
           </Route>
           <Route path="/about">
             <About />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
           <Route path="/">
             <Home />

@@ -10,7 +10,9 @@ const navigation = [
   {name : 'LandingPage', to : '/home'},
   {name : 'Todo', to : '/todo'},
   {name : 'Test', to : '/test'},
-  {name : 'About', to : '/about'}
+  {name : 'About', to : '/about'},
+  {name : 'Login', to : '/login'},
+  {name : 'Register', to : '/register'}
 ]
 const profile = ['Your Profile', 'Settings', 'Sign out']
 
@@ -95,7 +97,7 @@ export default function Navbar() {
                           >
                             <Menu.Items
                               static
-                              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                              className=" z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                             >
                               {profile.map((item) => (
                                 <Menu.Item key={item}>

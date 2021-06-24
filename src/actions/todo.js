@@ -7,8 +7,6 @@ export const getTodo = (docID) => {
         .collection("spaceboy")
         .onSnapshot(snapshot => {
             snapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                // console.log(doc.id, " => ", doc.data());
                 if(doc.id === docID) {
                     dispatch({
                         type: 'GET_TODO',
@@ -30,6 +28,7 @@ export const getTodos = () => {
                 id: doc.id,
                 ...doc.data()
             }))
+
             dispatch({
                 type: 'GET_TODOS',
                 payload : todos
@@ -45,7 +44,7 @@ export const addTodo = (document) => {
         .collection("spaceboy")
         .add(document)
         .then(ref => {
-        console.log("Added document with ID: ", ref)
+            console.log("Added document with ID: ", ref)
         })
         dispatch(getTodos())
     }
