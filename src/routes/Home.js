@@ -1,10 +1,12 @@
 import React from "react";
+import background from "../assets/background3.jpg"
 
 export default function Home() {
   return (
-    <div>
-      {/* <h2 className="text-4xl font-hairline">Home</h2> */}
-      <img className="w-full h-52" alt="mainbackground"  src="https://wallpaperaccess.com/full/2655666.jpg"></img>
+    <div className="flex flex-wrap justify-center">
+      <div className="w-full">
+        <img src={background} alt="background" className="shadow rounded w-full h-auto align-middle border-none" />
+      </div>
     </div>
   );
 }

@@ -1,30 +1,63 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { logout } from "../actions/auth"
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
 const navigation = [
-  {name : 'LandingPage', to : '/home'},
+  {name : 'Home', to : '/home'},
   {name : 'Todo', to : '/todo'},
   {name : 'Test', to : '/test'},
   {name : 'About', to : '/about'},
+  {name : 'Profile', to : '/profile'}
+]
+
+const account = [
   {name : 'Login', to : '/login'},
   {name : 'Register', to : '/register'}
 ]
-const profile = ['Your Profile', 'Settings', 'Sign out']
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Navbar() {
+  const history = useHistory()
+  const dispatch = useDispatch()
+
   const [tab, setTab] = useState(0)
+  const [accTab, setAccTab] = useState(0)
+
+  // const [token, setToken] = useState(localStorage.getItem("token"))
+  // console.log("token:", token)
+  const [token, setToken] = useState("scscs")
+
+  const store = useSelector(state => state.auth)
+  const user = store.user
+  console.log("user:", user)
+
+  // useEffect(() => {
+  //   setToken(localStorage.getItem("token"))
+  // }, [])
+
   const handleTab = (index) => {
     setTab(index)
   }
+
+  const handleAccTab = (index) => {
+    setAccTab(index)
+  }
+
+  const handleProfile = () => {
+      dispatch(logout())
+      setToken('')
+      history.push("/")
+  }
+
   return (
     <div>
       <Disclosure as="nav" className="bg-gray-800">
@@ -42,7 +75,7 @@ export default function Navbar() {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item, itemIdx) =>
+                      {token && navigation.map((item, itemIdx) =>
                         itemIdx === tab ? (
                           <Fragment key={item}>
                             {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
@@ -64,63 +97,83 @@ export default function Navbar() {
                     </div>
                   </div>
                 </div>
-                <div className="hidden md:block">
-                  <div className="ml-4 flex items-center md:ml-6">
-                    <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-
-                    {/* Profile dropdown */}
-                    <Menu as="div" className="ml-3 relative">
-                      {({ open }) => (
-                        <>
-                          <div>
-                            <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                              <span className="sr-only">Open user menu</span>
-                              <img
-                                className="h-8 w-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
-                              />
-                            </Menu.Button>
-                          </div>
-                          <Transition
-                            show={open}
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                          >
-                            <Menu.Items
-                              static
-                              className=" z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            >
-                              {profile.map((item) => (
-                                <Menu.Item key={item}>
-                                  {({ active }) => (
-                                    <Link
-                                      to="/"
-                                      className={classNames(
-                                        active ? 'bg-gray-100' : '',
-                                        'block px-4 py-2 text-sm text-gray-700'
+                {
+                  token ? (
+                    <div className="hidden md:block">
+                      <div className="ml-4 flex items-center md:ml-6">
+                        {/* Profile dropdown */}
+                        <Menu as="div" className="ml-3 relative">
+                          {({ open }) => (
+                            <>
+                              <div>
+                                <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                  <span className="sr-only">Open user menu</span>
+                                  <img
+                                    className="h-8 w-8 rounded-full"
+                                    src="https://lh3.googleusercontent.com/ogw/ADea4I4xUDPeoM9F8WZfzwXYOcki9YvVD01h6DDi_mx_=s32-c-mo"
+                                    alt=""
+                                  />
+                                </Menu.Button>
+                              </div>
+                              <Transition
+                                show={open}
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                              >
+                                <Menu.Items
+                                  static
+                                  className=" z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                >
+                                    <Menu.Item key={"item.name"}>
+                                      {({ active }) => (
+                                        <a
+                                          // to={item.to}
+                                          href="/"
+                                          onClick = {() => handleProfile()}
+                                          className={classNames(
+                                            active ? 'bg-gray-100' : '',
+                                            'block px-4 py-2 text-sm text-gray-700'
+                                          )}
+                                        >
+                                          Logout
+                                        </a>
                                       )}
-                                    >
-                                      {item}
-                                    </Link>
-                                  )}
-                                </Menu.Item>
-                              ))}
-                            </Menu.Items>
-                          </Transition>
-                        </>
-                      )}
-                    </Menu>
-                  </div>
-                </div>
+                                    </Menu.Item>
+                                </Menu.Items>
+                              </Transition>
+                            </>
+                          )}
+                        </Menu>
+                      </div>
+                    </div>
+                  )
+                  : 
+                    <div className="ml-3 relative">
+                    {account.map((item, itemIdx) =>
+                      itemIdx === accTab ? (
+                        <Fragment key={item}>
+                          <Link to={item.to} onClick={() => handleAccTab(itemIdx)} className="bg-gray-900 mx-2 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            {item.name}
+                          </Link>
+                        </Fragment>
+                      ) : (
+                        <Link
+                          key={item.name}
+                          to={item.to}
+                          onClick={() => handleAccTab(itemIdx)} 
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white px-4 mx-2 py-2 rounded-md text-sm font-medium"
+                        >
+                          {item.name}
+                        </Link>
+                      )
+                    )}
+                    </div>
+                }
                 <div className="-mr-2 flex md:hidden">
                   {/* Mobile menu button */}
                   <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
@@ -161,7 +214,7 @@ export default function Navbar() {
                   <div className="flex-shrink-0">
                     <img
                       className="h-10 w-10 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      src="https://lh3.googleusercontent.com/ogw/ADea4I4xUDPeoM9F8WZfzwXYOcki9YvVD01h6DDi_mx_=s32-c-mo"
                       alt=""
                     />
                   </div>
@@ -174,7 +227,7 @@ export default function Navbar() {
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
                 </div>
-                <div className="mt-3 px-2 space-y-1">
+                {/* <div className="mt-3 px-2 space-y-1">
                   {profile.map((item) => (
                     <Link
                       key={item}
@@ -184,18 +237,18 @@ export default function Navbar() {
                       {item}
                     </Link>
                   ))}
-                </div>
+                </div> */}
               </div>
             </Disclosure.Panel>
           </>
         )}
       </Disclosure>
 
-      <header className="bg-white shadow">
+      {/* <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto py-1 px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-gray-900">{navigation[tab].name}</h1>
         </div>
-      </header>
+      </header> */}
     </div>
   );
 }

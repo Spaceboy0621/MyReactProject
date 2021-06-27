@@ -3,6 +3,8 @@ import { Link, useHistory, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { getTodo, updateTodo } from "../actions/todo"
 import { DatePicker } from "../components/Datepicker";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export default function Todoedit() {
     // ** Store Vars
@@ -16,18 +18,18 @@ export default function Todoedit() {
 
     useEffect(() => {
         dispatch(getTodo(docID))
-    }, [dispatch])
+    }, [dispatch, docID])
 
     const store = useSelector(state => state.todo)
     const todo = store.todo
+    console.log("todo:", todo)
 
     useEffect(() => {
         setTitle(todo.title)
-        setDescription(todo.description)
+        // setDescription(todo.description)
     }, [dispatch, todo])
 
     const handleEdit = () => {
-        console.log(date)
         const data = {
             title,
             description,
@@ -69,20 +71,8 @@ export default function Todoedit() {
                 </div>
                 <div className="col-span-2 ...">
                     <div className="px-24 py-3">
-                        <label htmlFor="description" className="sr-only">
-                            Description
-                        </label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            type="text"
-                            value={description}
-                            autoComplete="Description"
-                            onChange={e => setDescription(e.target.value)}
-                            required
-                            className="h-32 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                            placeholder="description"
-                        />
+
+                        <ReactQuill className="" theme="snow" value={description} onChange={setDescription}/>
 
                         <div className="flex w-max mx-auto my-5">
                             <button className="border-2 border-transparent bg-purple-500 py-1 px-2 font-bold uppercase text-white rounded transition-all hover:border-purple-500 hover:bg-transparent hover:text-purple-500">Active</button>
@@ -106,7 +96,7 @@ export default function Todoedit() {
                     <Link to="/todo">
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                            className="group w-full flex justify-center py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                         >
                             <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,7 +109,7 @@ export default function Todoedit() {
                     <div>
                         <button
                             onClick={handleEdit}
-                            className="group relative w-full flex justify-center py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="group w-full flex justify-center py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

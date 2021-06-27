@@ -11,6 +11,7 @@ import Todoadd from "./routes/Todoadd";
 import Todoedit from "./routes/Todoedit";
 import Register from "./routes/Register";
 import Feedback from "./routes/Feedback";
+import Profile from "./routes/Profile";
 import PersonalityTest from "./routes/PersonalityTest";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -41,6 +42,9 @@ export default function App() {
           </Route>
           <Route path="/todoadd">
             <Todoadd />
+          </Route>
+          <Route path="/profile">
+            <Profile />
           </Route>
           <Route path="/about">
             <About />

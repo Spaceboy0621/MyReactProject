@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import { register } from "../actions/auth"
 import { useDispatch } from 'react-redux'
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Register() {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
@@ -21,6 +22,7 @@ export default function Register() {
             password
         }
         dispatch(register(data))
+        history.push("/home")
     }
 
     return (

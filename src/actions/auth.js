@@ -19,6 +19,8 @@ export const register = (data) => {
                     payload : user
                 })
 
+                localStorage.setItem("token", user.token)
+
                 const store = getState()
                 console.log("store:", store)
             }
@@ -47,6 +49,8 @@ export const login = (data) => {
                     type: 'GET_USER',
                     payload : user
                 })
+                
+                localStorage.setItem("token", user.token)
 
                 const store = getState()
                 console.log("store:", store)
@@ -55,5 +59,12 @@ export const login = (data) => {
             console.log("error", error);
             alert(error.message);
         }
+    }
+}
+
+export const logout = () => {
+    return dispatch => {
+        // ** Remove token from localStorage
+        localStorage.removeItem('token')
     }
 }

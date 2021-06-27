@@ -7,6 +7,7 @@ export default function About() {
   const setToast = () => {
     toast.success("I always felt like I could do anything.");
   }
+
   return (
     <div>
       <div className="text-blue-500 text-center py-1 text-6xl">This website is my project</div>

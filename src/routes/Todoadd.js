@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom"
 import { useDispatch } from 'react-redux'
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { addTodo } from "../actions/todo"
 
 export default function Todoadd() {
@@ -50,16 +51,7 @@ export default function Todoadd() {
                 <label htmlFor="description" className="sr-only">
                     Description
                 </label>
-                <textarea
-                    id="description"
-                    name="description"
-                    type="text"
-                    autoComplete="Description"
-                    onChange={e => setDescription(e.target.value)}
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="description"
-                />
+                <ReactQuill className="" theme="snow" value={description} onChange={setDescription}/>
             </div>
 
             <div className="px-24 py-3">
